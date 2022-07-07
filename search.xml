@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2022/07/07/hello-world/"/>
+      <url>/2022/07/07/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>用Python轻松实现视频转gif动图</title>
+      <link href="/2022/07/05/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/"/>
+      <url>/2022/07/05/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/</url>
+      
+        <content type="html"><![CDATA[<h1 id="用Python轻松实现视频转gif动图"><a href="#用Python轻松实现视频转gif动图" class="headerlink" title="用Python轻松实现视频转gif动图"></a>用Python轻松实现视频转gif动图</h1><p>不知道大家是不是有过类似的经历，想把视频转换为gif动态图片，却无从下手。网上搜的网站和软件很多是需要付费的，或者转出来的gif动图是有水印的，就很无语！其实，通过Python几行代码就可以搞定视频转gif</p><h2 id="安装moviepy库"><a href="#安装moviepy库" class="headerlink" title="安装moviepy库"></a>安装moviepy库</h2><p>命令行用输入（注：pip 已内置于 Python 3.4 和 2.7 及以上版本，其他版本需另行安装）</p><blockquote><p>pip install moviepy</p></blockquote><p>这里提一句，请先联网再安装moviepy库!</p><p>使用镜像可以让你安装的更快！</p><blockquote><p>pip install moviepy -i <a href="https://pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a></p></blockquote><p>常用的Python镜像有</p><blockquote><p>百度镜像：<a href="https://mirror.baidu.com/pypi/simple">https://mirror.baidu.com/pypi/simple</a><br>清华镜像：<a href="https://pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a></p></blockquote><h2 id="写入代码"><a href="#写入代码" class="headerlink" title="写入代码"></a>写入代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> moviepy.editor <span class="keyword">import</span> *</span><br><span class="line">video_path = <span class="built_in">input</span>(<span class="string">&#x27;请输入视频路径：&#x27;</span>)</span><br><span class="line">video = VideoFileClip(video_path)</span><br><span class="line">video.write_gif(<span class="string">&quot;gif_file.gif&quot;</span>, fps=<span class="number">20</span>)</span><br></pre></td></tr></table></figure><h2 id="转换效果"><a href="#转换效果" class="headerlink" title="转换效果"></a>转换效果</h2><p><img src="/img/gif_file.gif"></p><h2 id="gif文件大的解决方案"><a href="#gif文件大的解决方案" class="headerlink" title="gif文件大的解决方案"></a>gif文件大的解决方案</h2><p>gif文件一般都很大。22秒的gif动图，就足足有49M的大小！如果需要转换的视频有一分钟，那么gif文件就有100M之多甚至更多！<br><img src="/img/gif%E5%A4%A7%E6%BC%94%E7%A4%BA%E5%9B%BE%E7%89%87.png"></p><p>那我们该如何解决呢?</p><p><strong>调整转换后图片的分辨率（图片大小）、设置帧率、截取视频长度再转换</strong>这几种方式可以减少gif的大小</p><h3 id="调整转换后图片的分辨率（图片大小）"><a href="#调整转换后图片的分辨率（图片大小）" class="headerlink" title="调整转换后图片的分辨率（图片大小）"></a>调整转换后图片的分辨率（图片大小）</h3><p>使用 resize 的参数来调整图片的大小<br>1、缩放百分比</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clip = (VideoFileClip(<span class="string">&quot;xxx.mp4&quot;</span>).resize(<span class="number">0.5</span>))</span><br><span class="line"><span class="comment"># 尺寸大小缩放50%</span></span><br></pre></td></tr></table></figure><p>2、用像素表示</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clip = (VideoFileClip(<span class="string">&quot;xxx.mp4&quot;</span>).resize((<span class="number">300</span>, <span class="number">200</span>)))</span><br><span class="line"><span class="comment"># 指定转换后的gif的大小为 300*200</span></span><br></pre></td></tr></table></figure><h3 id="设置帧率"><a href="#设置帧率" class="headerlink" title="设置帧率"></a>设置帧率</h3><p>设置 fps 的值，来压缩 gif 的大小</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clip.write_gif(<span class="string">&quot;gif_file.gif&quot;</span>, fps=<span class="number">15</span>)</span><br><span class="line"><span class="comment"># 设置转换后的gif的帧率为15</span></span><br></pre></td></tr></table></figure><h3 id="截取视频长度再转换"><a href="#截取视频长度再转换" class="headerlink" title="截取视频长度再转换"></a>截取视频长度再转换</h3><p>我们还可以通过设置 subclip 参数来指定转换的视频范围:<br>subclip：截取原视频中的自 start 至 end 间的视频片段</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">subclip(<span class="number">2</span>,<span class="number">3</span>) <span class="comment"># 选取的是原视频从2秒到3秒</span></span><br><span class="line">subclip((<span class="number">2</span>,<span class="number">3.5</span>),(<span class="number">2</span>,<span class="number">5.0</span>)) <span class="comment">#选取的是原视频从2.35秒到2.50秒</span></span><br></pre></td></tr></table></figure><h2 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h2><p>该程序已经打包为 exe 文件了<br>没有下载 Python 的朋友，也可以通过以下的链接获取<em><strong>视频转gif的软件</strong></em>哦！<br><a href="https://pan.baidu.com/s/1Sd7wQj-JkD6MDDtNTur9HQ">点击下载软件</a>  提取码：6666</p><p>在用pyinstaller打包成exe文件时，会有一个小坑 moviepy 打包报错，我也是参考了大佬的文章才顺利解决问题 <a href="https://blog.csdn.net/J_____Q/article/details/120123232">参考文章跳转</a></p><p>相关参考文章：<a href="https://blog.csdn.net/m0_59163425/article/details/125154457">https://blog.csdn.net/m0_59163425/article/details/125154457</a><br>             <a href="https://www.jb51.net/article/235699.htm">https://www.jb51.net/article/235699.htm</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>代码演示</title>
+      <link href="/2022/07/03/ceshi3/"/>
+      <url>/2022/07/03/ceshi3/</url>
+      
+        <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function <span class="title function_">a</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>测试2</title>
+      <link href="/2022/07/03/%E4%BB%A3%E7%A0%81%E5%9D%97%E6%BC%94%E7%A4%BA/two/"/>
+      <url>/2022/07/03/%E4%BB%A3%E7%A0%81%E5%9D%97%E6%BC%94%E7%A4%BA/two/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>代码演示</title>
+      <link href="/2022/07/03/%E4%BB%A3%E7%A0%81%E5%9D%97%E6%BC%94%E7%A4%BA/%E6%BC%94%E7%A4%BA/"/>
+      <url>/2022/07/03/%E4%BB%A3%E7%A0%81%E5%9D%97%E6%BC%94%E7%A4%BA/%E6%BC%94%E7%A4%BA/</url>
+      
+        <content type="html"><![CDATA[<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;测试&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
