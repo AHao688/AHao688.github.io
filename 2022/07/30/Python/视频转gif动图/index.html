@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>用Python轻松实现视频转gif动图 | 阿浩の博客</title><meta name="keywords" content="Python,moviepy,gif"><meta name="author" content="阿浩"><meta name="copyright" content="阿浩"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="不知道大家是不是有过类似的经历，想把视频转换为gif动态图片，却无从下手。网上搜的网站和软件很多是需要付费的，或者转出来的gif动图是有水印的，就很无语！其实，通过Python几行代码就可以搞定视频转gif 安装moviepy库命令行输入（注：pip 已内置于 Python 3.4 和 2.7 及以上版本，其他版本需另行安装）  pip install moviepy  这里提一句，请先联网再安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Python轻松实现视频转gif动图">
+<meta property="og:url" content="https://ahao688.github.io/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/index.html">
+<meta property="og:site_name" content="阿浩の博客">
+<meta property="og:description" content="不知道大家是不是有过类似的经历，想把视频转换为gif动态图片，却无从下手。网上搜的网站和软件很多是需要付费的，或者转出来的gif动图是有水印的，就很无语！其实，通过Python几行代码就可以搞定视频转gif 安装moviepy库命令行输入（注：pip 已内置于 Python 3.4 和 2.7 及以上版本，其他版本需另行安装）  pip install moviepy  这里提一句，请先联网再安装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png">
+<meta property="article:published_time" content="2022-07-30T13:40:00.000Z">
+<meta property="article:modified_time" content="2022-08-03T07:00:13.153Z">
+<meta property="article:author" content="阿浩">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="moviepy">
+<meta property="article:tag" content="gif">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png"><link rel="shortcut icon" href="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/avatar.png"><link rel="canonical" href="https://ahao688.github.io/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":250},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '用Python轻松实现视频转gif动图',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-03 15:00:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">阿浩の博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">用Python轻松实现视频转gif动图</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-30T13:40:00.000Z" title="发表于 2022-07-30 21:40:00">2022-07-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-03T07:00:13.153Z" title="更新于 2022-08-03 15:00:13">2022-08-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="用Python轻松实现视频转gif动图"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>不知道大家是不是有过类似的经历，想把视频转换为gif动态图片，却无从下手。网上搜的网站和软件很多是需要付费的，或者转出来的gif动图是有水印的，就很无语！其实，通过Python几行代码就可以搞定视频转gif</p>
+<h1 id="安装moviepy库"><a href="#安装moviepy库" class="headerlink" title="安装moviepy库"></a>安装moviepy库</h1><p>命令行输入（注：pip 已内置于 Python 3.4 和 2.7 及以上版本，其他版本需另行安装）</p>
+<blockquote>
+<p>pip install moviepy</p>
+</blockquote>
+<p>这里提一句，请先联网再安装moviepy库!</p>
+<p>使用镜像可以让你安装的更快！</p>
+<blockquote>
+<p>pip install moviepy -i <a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a></p>
+</blockquote>
+<p>常用的Python镜像有</p>
+<blockquote>
+<p>百度镜像：<a target="_blank" rel="noopener" href="https://mirror.baidu.com/pypi/simple">https://mirror.baidu.com/pypi/simple</a><br>清华镜像：<a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a></p>
+</blockquote>
+<h1 id="写入代码"><a href="#写入代码" class="headerlink" title="写入代码"></a>写入代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> moviepy.editor <span class="keyword">import</span> *</span><br><span class="line">video_path = <span class="built_in">input</span>(<span class="string">&#x27;请输入视频路径：&#x27;</span>)</span><br><span class="line">video = VideoFileClip(video_path)</span><br><span class="line">video.write_gif(<span class="string">&quot;gif_file.gif&quot;</span>, fps=<span class="number">20</span>)</span><br><span class="line"><span class="comment"># 设置转换后的gif的帧率为20</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="转换效果"><a href="#转换效果" class="headerlink" title="转换效果"></a>转换效果</h1><p><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/gif_file.gif"></p>
+<h1 id="gif文件大的解决方案"><a href="#gif文件大的解决方案" class="headerlink" title="gif文件大的解决方案"></a>gif文件大的解决方案</h1><p>gif文件一般都很大。22秒的gif动图，就足足有49M的大小！如果需要转换的视频有一分钟，那么gif文件就有100M之多甚至更多！<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/gifbig.png"></p>
+<p>那我们该如何解决呢?</p>
+<p><code>设置帧率、截取视频长度再转换</code>这两种方式可以减少gif的大小</p>
+<h2 id="设置帧率"><a href="#设置帧率" class="headerlink" title="设置帧率"></a>设置帧率</h2><p>设置 fps 的值，来压缩 gif 的大小</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clip.write_gif(<span class="string">&quot;gif_file.gif&quot;</span>, fps=<span class="number">15</span>)</span><br><span class="line"><span class="comment"># 设置转换后的gif的帧率为15</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="截取视频长度再转换"><a href="#截取视频长度再转换" class="headerlink" title="截取视频长度再转换"></a>截取视频长度再转换</h2><p>我们还可以通过设置 subclip 参数来指定转换的视频范围。 subclip：截取原视频中的自 t_start 至 t_end 间的视频片段</p>
+<table>
+<thead>
+<tr>
+<th align="center">时间格式</th>
+<th align="center">表示方式</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">秒</td>
+<td align="center">xx.xx的形式</td>
+<td align="center">11.02 代表11.02秒</td>
+</tr>
+<tr>
+<td align="center">分,秒</td>
+<td align="center">xx,xx的形式</td>
+<td align="center">10,35 代表10分35秒</td>
+</tr>
+<tr>
+<td align="center">时,分,秒</td>
+<td align="center">xx,xx,xx的形式</td>
+<td align="center">10,35,30 代表10小时35分30秒</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">subclip(<span class="number">2</span>,<span class="number">3</span>) <span class="comment"># 选取的是原视频从 2秒 到 3秒</span></span><br><span class="line">subclip((<span class="number">1.05</span>),(<span class="number">1.08</span>)) <span class="comment">#选取的时原视频从 1.05秒 到 1.08秒</span></span><br><span class="line">subclip((<span class="number">1</span>,<span class="number">5</span>),(<span class="number">1</span>,<span class="number">8</span>)) <span class="comment">#选取的是原视频从 1分5秒 到 1分8秒</span></span><br><span class="line">subclip((<span class="number">1</span>,<span class="number">5</span>,<span class="number">30</span>),(<span class="number">1</span>,<span class="number">5</span>,<span class="number">35</span>)) <span class="comment">#选取的是原视频从 1小时5分30秒 到 1小时5分35秒</span></span><br></pre></td></tr></table></figure>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>截取原视频的5.01秒到6.36秒，并把转换后的 gif 的帧率设为18</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> moviepy.editor <span class="keyword">import</span> *</span><br><span class="line">video_path = <span class="built_in">input</span>(<span class="string">&#x27;请输入视频路径：&#x27;</span>)</span><br><span class="line">video = VideoFileClip(video_path).subclip(<span class="number">5.01</span>,<span class="number">6.36</span>) <span class="comment">#选取原视频5.01秒到6.36秒</span></span><br><span class="line">video.write_gif(<span class="string">&quot;gif_file.gif&quot;</span>, fps=<span class="number">18</span>) <span class="comment">#设置转换后的gif的帧率为18</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h1><p>该程序已经打包为 exe 文件了<br>有需要的的朋友，也可以通过以下的链接获取 <em><strong>视频转 gif 的软件</strong></em> 哟！<br><a target="_blank" rel="noopener" href="https://wwp.lanzouq.com/iPMZN08j7wtg">点我下载软件</a></p>
+<p>在用pyinstaller打包成exe文件时，会有一个小坑 moviepy 打包报错，我也是参考了大佬的文章才顺利解决问题 <a target="_blank" rel="noopener" href="https://blog.csdn.net/J_____Q/article/details/120123232">参考文章跳转</a></p>
+<p>最后，若有不足或者不当之处，欢迎指正批评！<br>相关参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_59163425/article/details/125154457">https://blog.csdn.net/m0_59163425/article/details/125154457</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1oX4y137vh?p=7&amp;share_source=copy_web&amp;vd_source=41db5528fa268b4e34f279c406002a4c">https://www.bilibili.com/video/BV1oX4y137vh?p=7&amp;share_source=copy_web&amp;vd_source=41db5528fa268b4e34f279c406002a4c</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ahao688.github.io">阿浩</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ahao688.github.io/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/">https://ahao688.github.io/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ahao688.github.io" target="_blank">阿浩の博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/moviepy/">moviepy</a><a class="post-meta__tags" href="/tags/gif/">gif</a></div><div class="post_share"><div class="social-share" data-image="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.png" target="_blank"><img class="post-qr-code-img" src="/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/27/%E5%89%8D%E7%AB%AF/%E5%8E%9F%E7%94%9Fcss+js%E5%AE%9E%E7%8E%B0%E8%BD%AE%E6%92%AD%E5%9B%BE/"><img class="prev-cover" src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover3.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">原生css+js实现轮播图</div></div></a></div><div class="next-post pull-right"><a href="/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/"><img class="next-cover" src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python爬虫实战之xpath解析</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/" title="Python爬虫实战之xpath解析"><img class="cover" src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-01</div><div class="title">Python爬虫实战之xpath解析</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿浩</div><div class="author-info__description">要么出众，要么出局</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AHao688"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AHao688" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85moviepy%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">安装moviepy库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99%E5%85%A5%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">写入代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E6%95%88%E6%9E%9C"><span class="toc-number">3.</span> <span class="toc-text">转换效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gif%E6%96%87%E4%BB%B6%E5%A4%A7%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">4.</span> <span class="toc-text">gif文件大的解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%B8%A7%E7%8E%87"><span class="toc-number">4.1.</span> <span class="toc-text">设置帧率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%AA%E5%8F%96%E8%A7%86%E9%A2%91%E9%95%BF%E5%BA%A6%E5%86%8D%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.2.</span> <span class="toc-text">截取视频长度再转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%AF%B4%E6%98%8E"><span class="toc-number">5.</span> <span class="toc-text">其他说明</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/" title="Python爬虫实战之xpath解析"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python爬虫实战之xpath解析"/></a><div class="content"><a class="title" href="/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/" title="Python爬虫实战之xpath解析">Python爬虫实战之xpath解析</a><time datetime="2022-08-01T02:40:00.000Z" title="发表于 2022-08-01 10:40:00">2022-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/" title="用Python轻松实现视频转gif动图"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="用Python轻松实现视频转gif动图"/></a><div class="content"><a class="title" href="/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/" title="用Python轻松实现视频转gif动图">用Python轻松实现视频转gif动图</a><time datetime="2022-07-30T13:40:00.000Z" title="发表于 2022-07-30 21:40:00">2022-07-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/27/%E5%89%8D%E7%AB%AF/%E5%8E%9F%E7%94%9Fcss+js%E5%AE%9E%E7%8E%B0%E8%BD%AE%E6%92%AD%E5%9B%BE/" title="原生css+js实现轮播图"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="原生css+js实现轮播图"/></a><div class="content"><a class="title" href="/2022/07/27/%E5%89%8D%E7%AB%AF/%E5%8E%9F%E7%94%9Fcss+js%E5%AE%9E%E7%8E%B0%E8%BD%AE%E6%92%AD%E5%9B%BE/" title="原生css+js实现轮播图">原生css+js实现轮播图</a><time datetime="2022-07-27T12:40:00.000Z" title="发表于 2022-07-27 20:40:00">2022-07-27</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 阿浩</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function insertCSS () {
+    const link = document.createElement("link")
+    link.rel = "stylesheet"
+    link.href = "https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css"
+    document.head.appendChild(link)
+  }
+
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline-server-six-kappa.vercel.app/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+  }
+
+  if (typeof Waline === 'function') initWaline()
+  else {
+    insertCSS()
+    getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="417794815" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="false" data-lrctype="3"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://lib.baomitu.com/pjax/0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
