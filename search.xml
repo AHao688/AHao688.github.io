@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>如何加速访问Github</title>
+      <link href="/2022/09/24/github/%E5%A6%82%E4%BD%95%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AEgithub/"/>
+      <url>/2022/09/24/github/%E5%A6%82%E4%BD%95%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AEgithub/</url>
+      
+        <content type="html"><![CDATA[<p>本篇文章主要介绍加速访问github的方法（不是科学上网），能够科学上网的同志可以自行跳过本文。<br>以下是加速访问Github的几种方法：</p><h1 id="Watt-Toolkit（原名：Steam-）"><a href="#Watt-Toolkit（原名：Steam-）" class="headerlink" title="Watt Toolkit（原名：Steam++）"></a>Watt Toolkit（原名：Steam++）</h1><p>Steam++官网下载：<a href="https://steampp.net/">https://steampp.net</a><br>或者也可在博主的蓝奏云上下载：<a href="https://wwp.lanzouv.com/izkBk0c9lu4h">https://wwp.lanzouv.com/izkBk0c9lu4h</a> 密码:c274<br>下载安装后启动，勾选Github，点击一键加速 即可加速访问Github</p><p><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/github_tool1.jpg"></p><h1 id="dev-sidecar（推荐使用）"><a href="#dev-sidecar（推荐使用）" class="headerlink" title="dev-sidecar（推荐使用）"></a>dev-sidecar（推荐使用）</h1><p>下载：<a href="https://wwp.lanzouv.com/iHFSh0c9lhid">https://wwp.lanzouv.com/iHFSh0c9lhid</a><br>使用方法：安装后启动，选择模式，然后把代理服务和系统代理启动即可<br>注意：第一次打开会提示安装证书，根据提示操作即可</p><p><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/github_tool2.jpg"></p><p>Gitee：<a href="https://gitee.com/interesting-goods/dev-sidecar">https://gitee.com/interesting-goods/dev-sidecar</a><br>github：<a href="https://github.com/docmirror/dev-sidecar">https://github.com/docmirror/dev-sidecar</a></p><h1 id="FastGithub（推荐使用）"><a href="#FastGithub（推荐使用）" class="headerlink" title="FastGithub（推荐使用）"></a>FastGithub（推荐使用）</h1><p>下载：<a href="https://wwp.lanzouv.com/iMRCG0c9klib">https://wwp.lanzouv.com/iMRCG0c9klib</a><br>使用方法：下载后解压，找到文件夹中的FastGithub.UI.exe，双击运行FastGithub.UI.exe<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/github_tool3.jpg"></p><p>github：<a href="https://github.com/dotnetcore/FastGithub">https://github.com/dotnetcore/FastGithub</a></p><h1 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h1><p>修改hosts这种方式访问GitHub是比较麻烦的，这里直接使用网络上某位大佬写好的exe文件，以管理员身份运行即可加速访问Github。<br>一定要以管理员身份运行，否则可能不成功！<br>下载链接：<a href="https://wwp.lanzouv.com/ioPAg0c9lztc">https://wwp.lanzouv.com/ioPAg0c9lztc</a> 密码:9cxe</p><p>通过以上几种方法，我们基本上可以稳定访问GitHub了！当然，你能科学上网，当我没说。<br>如果本文对你有帮助的话，能不能打赏文章，支持一下作者。（开玩笑的）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> github </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> github </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Python爬虫实战之xpath解析</title>
       <link href="/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/"/>
       <url>/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/</url>
