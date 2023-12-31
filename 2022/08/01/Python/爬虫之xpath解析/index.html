@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Python爬虫实战之xpath解析 | 阿浩の博客</title><meta name="keywords" content="Python,爬虫,xpath"><meta name="author" content="阿浩"><meta name="copyright" content="阿浩"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="XPath 是一门在 XML 文档中查找信息的语言，最初是用来搜寻 XML 文档的，但是它同样适用于 HTML 文档的搜索。所以在Python爬虫中，我们经常使用xpath解析这种高效便捷的方式来提取信息。 环境的安装使用 xpath 需要安装 lxml 库  pip install lxml -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple  基础使用实例化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫实战之xpath解析">
+<meta property="og:url" content="https://ahao688.github.io/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="阿浩の博客">
+<meta property="og:description" content="XPath 是一门在 XML 文档中查找信息的语言，最初是用来搜寻 XML 文档的，但是它同样适用于 HTML 文档的搜索。所以在Python爬虫中，我们经常使用xpath解析这种高效便捷的方式来提取信息。 环境的安装使用 xpath 需要安装 lxml 库  pip install lxml -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple  基础使用实例化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png">
+<meta property="article:published_time" content="2022-08-01T02:40:00.000Z">
+<meta property="article:modified_time" content="2022-08-03T06:51:48.603Z">
+<meta property="article:author" content="阿浩">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="xpath">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png"><link rel="shortcut icon" href="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/avatar.png"><link rel="canonical" href="https://ahao688.github.io/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":250},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python爬虫实战之xpath解析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-03 14:51:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/style.css"><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">阿浩の博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python爬虫实战之xpath解析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-01T02:40:00.000Z" title="发表于 2022-08-01 10:40:00">2022-08-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-03T06:51:48.603Z" title="更新于 2022-08-03 14:51:48">2022-08-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python爬虫实战之xpath解析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>XPath 是一门在 XML 文档中查找信息的语言，最初是用来搜寻 XML 文档的，但是它同样适用于 HTML 文档的搜索。<br>所以在Python爬虫中，我们经常使用xpath解析这种高效便捷的方式来提取信息。</p>
+<h1 id="环境的安装"><a href="#环境的安装" class="headerlink" title="环境的安装"></a>环境的安装</h1><p>使用 xpath 需要安装 lxml 库</p>
+<blockquote>
+<p>pip install lxml -i <a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a></p>
+</blockquote>
+<h1 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h1><p>实例化一个etree的对象，且需要将被解析的页面源码数据加载到该对象中。有两种方式：<br>1、将本地的html文档中的源码数据加载到etree对象中<br><code> etree.parse(&#39;filePath&#39;, etree.HTMLParser())  # filePath为文件的路径</code><br>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree <span class="comment"># 导包</span></span><br><span class="line">html = etree.parse(<span class="string">&#x27;./test.html&#x27;</span>, etree.HTMLParser()) <span class="comment"># ./test.html为本地的html文件的路径</span></span><br><span class="line">html.xpath(<span class="string">&#x27;xpath表达式&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>2、将从互联网上获取的源码数据加载到etree对象中<br><code>etree.HtML(&#39;page_data&#39;) # page_data为从页面获取的源码数据</code><br>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree <span class="comment"># 导包</span></span><br><span class="line">html = etree.HtML(<span class="string">&#x27;page_data&#x27;</span>) <span class="comment"># page_data为从页面获取的源码数据</span></span><br><span class="line">html.xpath(<span class="string">&#x27;xpath表达式&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>使用xpath解析数据，最重要的步骤就是xpath表达式的书写。下面介绍xpath的常用表达式。</p>
+<h1 id="xpath常用表达式"><a href="#xpath常用表达式" class="headerlink" title="xpath常用表达式"></a>xpath常用表达式</h1><table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>表示的是从根节点开始定位。表示的是一个层级</td>
+</tr>
+<tr>
+<td>&#x2F;&#x2F;</td>
+<td>从当前节点选取子孙节点（后代）</td>
+</tr>
+<tr>
+<td>.</td>
+<td>选取当前节点</td>
+</tr>
+<tr>
+<td>..</td>
+<td>选取当前节点的父节点</td>
+</tr>
+<tr>
+<td>@</td>
+<td>选取属性</td>
+</tr>
+<tr>
+<td>text()</td>
+<td>获取文本</td>
+</tr>
+<tr>
+<td>*</td>
+<td>通配符，任何元素节点</td>
+</tr>
+<tr>
+<td>nodename[@attrib&#x3D;’value’]</td>
+<td>选取给定属性具有给定值的指定元素。如 div[@class&#x3D;’cell’] 表示 class 属性的值为 cell 的所有 div 元素</td>
+</tr>
+</tbody></table>
+<p><strong>对以上的表达式的实例详解</strong><br>先引入一段将要测试的 HTML 代码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>测试<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;big&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.baidu.com/&quot;</span>&gt;</span>百度<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://weibo.com/&quot;</span>&gt;</span>微博<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.tmall.com/&quot;</span>&gt;</span>天猫<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>test1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">&quot;aa&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://www.iqiyi.com/&quot;</span>&gt;</span>爱奇艺<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">&quot;bb&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://v.qq.com/&quot;</span>&gt;</span>腾讯视频<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>test2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了方便直观，我们对 HTML 文件进行本地读取测试</p>
+<h2 id="取节点"><a href="#取节点" class="headerlink" title="取节点"></a>取节点</h2><p><strong>&#x2F; 和 &#x2F;&#x2F; 的用法</strong><br>我们先感受一下使用 xpath 来对网页进行解析的过程<br>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = etree.parse(<span class="string">&#x27;./test.html&#x27;</span>, etree.HTMLParser())</span><br><span class="line">result1 = html.xpath(<span class="string">&#x27;/html/body/div/ul/li/a&#x27;</span>) <span class="comment"># /表示层级关系，第一个/是根节点</span></span><br><span class="line"><span class="built_in">print</span>(result1)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element a at 0x28696f20ac0&gt;, &lt;Element a at 0x28696f20b00&gt;, &lt;Element a at 0x28696f20b40&gt;]</span><br></pre></td></tr></table></figure>
+<p>可以看出运行结果中有3个节点，正好是从上往下数前面3个<strong>a节点</strong>。我们也可以看出上面使用了 <code>/</code> 来表示层级关系，所谓层级关系，其实就是一层包着一层，比如测试HTML代码中的 HTML 节点包着 body 节点，我们要取到 body 节点，就可以用 <code>/html/body</code> 来表示。以此类推，就可以取到我们想要的节点了。</p>
+<p>我们既然能取出前3个<strong>a节点</strong>,那该如何取出所有的<strong>a节点</strong>呢？<br>这时我们就要用到 <code>//</code> 了<br>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result2 = html.xpath(<span class="string">&#x27;/html/body/div//a&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(result2)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element a at 0x222bf9afc80&gt;, &lt;Element a at 0x222bf9afcc0&gt;, &lt;Element a at 0x222bf9afd00&gt;, &lt;Element a at 0x222bf9afd40&gt;, &lt;Element a at 0x222bf9afd80&gt;]</span><br></pre></td></tr></table></figure>
+<p>不难看出 class&#x3D;”big” 的div节点包着所有的 a节点，即所有的 a节点都是 class&#x3D;”big” 的div节点的子孙节点(或简单理解为后代),我们用 <code>/html/body/div//a</code> 即可取出所有的 a节点<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test1.jpg"><br><strong>通配符 * 的用法</strong><br>比如我们想取到下图的两个<strong>p节点</strong>,就可以用通配符 <code>*</code> 来提取<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test4.jpg"><br>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">第一个p节点的表达式为： &#x27;/html/body/div/ul/p&#x27;</span></span><br><span class="line"><span class="string">第二个p节点的表达式为： &#x27;/html/body/div/div/p&#x27;</span></span><br><span class="line"><span class="string">可以看到这两个表达式唯一不同的地方的是 p节点前面的节点（父节点）一个是ul，一个是div</span></span><br><span class="line"><span class="string">这时我们只需用通配符 * 来代替p节点前面的父节点，因为通配符 * 可以表示任意节点</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># html.xpath(&#x27;/html/body/div/ul/p&#x27;)</span></span><br><span class="line"><span class="comment"># html.xpath(&#x27;/html/body/div/div/p&#x27;)</span></span><br><span class="line">result = html.xpath(<span class="string">&#x27;/html/body/div/*/p&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element p at <span class="number">0x1e2c335f880</span>&gt;, &lt;Element p at <span class="number">0x1e2c335f8c0</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>当然如果要取这两个p节点也可以用 &#x2F;&#x2F; 来取，这里只是演示通配符 <code>*</code> 的用法</p>
+<p><strong>索引定位</strong><br>比如我们想取到第一个a节点，就可以使用索引定位了<br>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result3 = html.xpath(<span class="string">&#x27;/html/body/div/ul/li[1]/a&#x27;</span>) <span class="comment">#li[1]表示第一个li节点，注意索引是从[1]开始</span></span><br><span class="line"><span class="built_in">print</span>(result3)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element a at <span class="number">0x28705120ac0</span>&gt;]</span><br></pre></td></tr></table></figure>
+<p>这里一定要注意索引是从 <code>[1]</code> 开始！！！</p>
+<p><strong>属性定位</strong><br>比如我想取 id&#x3D;”aa” 的<strong>a节点</strong>，就可以使用属性定位 <code>nodename[@attrib=&#39;value&#39;]</code><br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test2.jpg"><br>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result4 = html.xpath(<span class="string">&#x27;//a[@id=&quot;aa&quot;]&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(result4)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element a at <span class="number">0x2718236fc00</span>&gt;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="取文本"><a href="#取文本" class="headerlink" title="取文本"></a>取文本</h2><p>在xpath中，使用 <code>text()</code> 即可取出网页中的文本信息<br>代码:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result5 = html.xpath(<span class="string">&#x27;/html/body/div/ul/li[1]/a/text()&#x27;</span>) <span class="comment"># text()获取文本</span></span><br><span class="line"><span class="built_in">print</span>(result5)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&#x27;百度&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<p>可以看到这个结果是一个列表，如果我们想取到里面的字符串，可以这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result6 = html.xpath(<span class="string">&#x27;/html/body/div/ul/li[1]/a/text()&#x27;</span>)[<span class="number">0</span>] <span class="comment"># 从列表中取第一个元素</span></span><br><span class="line"><span class="built_in">print</span>(result6)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">百度</span><br></pre></td></tr></table></figure>
+<h2 id="取属性"><a href="#取属性" class="headerlink" title="取属性"></a>取属性</h2><p>如果我们想取到下图这个属性，我可以使用 <code>@属性</code> 这个表达式<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test3.jpg"><br>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result7 = html.xpath(<span class="string">&#x27;//a[@id=&quot;bb&quot;]/@href&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(result7)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&#x27;https://v.qq.com/&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<h1 id="写xpath表达式的小技巧"><a href="#写xpath表达式的小技巧" class="headerlink" title="写xpath表达式的小技巧"></a>写xpath表达式的小技巧</h1><p>我们在写爬虫时，往往会遇到比较复杂的页面代码，我们写xpath表达式也比较费劲。这里告诉大家一个偷懒的方法，直接借助浏览器copy</p>
+<h2 id="学会偷懒"><a href="#学会偷懒" class="headerlink" title="学会偷懒"></a>学会偷懒</h2><p>具体操作：在浏览器中 F12 打开开发者工具 ——&gt; 用左上角的箭头选取需要的内容 ——&gt; 在对应的代码上鼠标右击 ——&gt; Copy ——&gt; Copy XPath<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test5.jpg"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy的结果：</span><br><span class="line">//*[@id=&quot;js_top_news&quot;]/div[2]/h2/a</span><br></pre></td></tr></table></figure>
+<p>这样的话，我们就轻松拿到了需要的xpath表达式。<br>当然我们不能只会使用这种copy的方法，还要真正理解xpath表达式的语法规则。因为在Python爬虫中xpath解析是有局限的，有些情况我们不能使用xpath表达式。</p>
+<h2 id="xpath解析的局限性"><a href="#xpath解析的局限性" class="headerlink" title="xpath解析的局限性"></a>xpath解析的局限性</h2><p>如果网页的数据是通过Ajax动态加载的，我们就不能使用xpath表达式来提取信息<br>一个简单的判断方法：在网页中鼠标右击 ——&gt; 查看网页源代码 ——&gt; ctrl+F 搜索想要的信息 ——&gt; 搜索无结果 ——&gt; 不能使用xpath解析<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test6.jpg"></p>
+<h2 id="写xpath表达式的避坑指南"><a href="#写xpath表达式的避坑指南" class="headerlink" title="写xpath表达式的避坑指南"></a>写xpath表达式的避坑指南</h2><p>有时，我们直接复制 xpath表达式或者自己写xpath表达式会遇到提取信息后返回一个 空列表 这种情况，反复对照代码发现自己好像又没写错，这是怎么回事呢？<br>其实，很大可能是你没有以 <code>网页源代码</code> 为准来写xpath表达式，而是根据开发者工具展示的代码来写xpath表达式。原因就是开发者工具是实时的网页代码（比如通过js加载一些数据后的)，而我们提取到的页面源码数据不一定是实时的网页代码。<br>比如：<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test7.jpg"><br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test8.jpg"><br>一般情况下，我们可以直接根据开发者工具展示的代码来写xpath表达式，但是一定要结合网页源代码，以网页源代码为准！<br>重要的事情说三遍！以网页源代码为准！以网页源代码为准！以网页源代码为准！</p>
+<h1 id="爬虫实战"><a href="#爬虫实战" class="headerlink" title="爬虫实战"></a>爬虫实战</h1><p>下面进入爬虫实战。我们的目标是爬取某斗图网的表情包图片和描述文字，并把描述文字作为表情包图片的文件名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入必要的库</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Referer&quot;</span>: <span class="string">&quot;https://www.doutub.com/&quot;</span>  <span class="comment"># 防盗链：溯源，当前本次请求的上一级是谁。请看下面图一、图二</span></span><br><span class="line">&#125;</span><br><span class="line">num = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;你想爬取前几页：&quot;</span>))</span><br><span class="line"><span class="keyword">if</span> os.path.exists(<span class="string">&quot;images&quot;</span>) == <span class="literal">False</span>:</span><br><span class="line">    os.mkdir(<span class="string">&quot;images&quot;</span>) <span class="comment">#如果不存在images文件夹，则创建images文件夹</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(num): <span class="comment"># for循环提取多页内容</span></span><br><span class="line">    url = <span class="string">f&#x27;https://www.doutub.com/img_lists/new/<span class="subst">&#123;n+<span class="number">1</span>&#125;</span>&#x27;</span></span><br><span class="line">    <span class="comment"># url 是网址，这里使用字符串拼接网址</span></span><br><span class="line">    <span class="comment"># 如 https://www.doutub.com/img_lists/new/1（第一页网址）  https://www.doutub.com/img_lists/new/2（第二页网址）等等</span></span><br><span class="line">    resp = requests.get(url, headers=headers)</span><br><span class="line">    html = etree.HTML(resp.text)</span><br><span class="line">    divs = html.xpath(<span class="string">&quot;//div[@class=&#x27;cell&#x27;]&quot;</span>)[<span class="number">0</span>:<span class="number">50</span>]</span><br><span class="line">    <span class="comment"># 返回的 divs 是一个列表，切片去除无用信息，第51个div我们不需要,详细看图三</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> div <span class="keyword">in</span> divs:</span><br><span class="line">        imgSrc = div.xpath(<span class="string">&quot;./a/img/@data-src&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">        word = div.xpath(<span class="string">&quot;./a/span/text()&quot;</span>)[<span class="number">0</span>].strip()</span><br><span class="line">        name = re.sub(<span class="string">r&#x27;[\:*?&quot;&lt;&gt;/|]&#x27;</span>, <span class="string">&#x27;&#x27;</span>, word) <span class="comment">#使用正则表达式sub函数去除 \:*?&quot;&lt;&gt;/|这些字符。原因看图四</span></span><br><span class="line">        img_type = imgSrc.split(<span class="string">&quot;.&quot;</span>)[-<span class="number">1</span>] <span class="comment">#因为图片文件的格式有些是jpg，有些是gif，这里取出图片格式</span></span><br><span class="line">        <span class="comment"># 下载图片</span></span><br><span class="line">        img_resp = requests.get(imgSrc, headers=headers)</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;images/&quot;</span> + name + <span class="string">&quot;.&quot;</span> + img_type, mode=<span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(img_resp.content)</span><br><span class="line">        <span class="built_in">print</span>(name + <span class="string">&quot;.&quot;</span> + img_type, <span class="string">&quot;下载完成&quot;</span>)</span><br><span class="line">        time.sleep(<span class="number">0.3</span>)  <span class="comment"># 防止频繁访问被封ip，这里休息0.3秒</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;\n第<span class="subst">&#123;n+<span class="number">1</span>&#125;</span>页下载完成！\n&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;全部下载完成！！！&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>图一：<br>防盗链问题<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test10.jpg"><br>图二：<br>解决防盗链<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test11.jpg"></p>
+<p>图三：<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test9.jpg"></p>
+<p>图四：<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test12.jpg"></p>
+<p>最终效果：<br><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/xpath_test13.jpg"></p>
+<p><strong>大功告成！</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ahao688.github.io">阿浩</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ahao688.github.io/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/">https://ahao688.github.io/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ahao688.github.io" target="_blank">阿浩の博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/%E7%88%AC%E8%99%AB/">爬虫</a><a class="post-meta__tags" href="/tags/xpath/">xpath</a></div><div class="post_share"><div class="social-share" data-image="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.png" target="_blank"><img class="post-qr-code-img" src="/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/"><img class="prev-cover" src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">用Python轻松实现视频转gif动图</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/24/github/%E5%A6%82%E4%BD%95%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AEgithub/"><img class="next-cover" src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover5.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">如何加速访问Github</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/" title="用Python轻松实现视频转gif动图"><img class="cover" src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-30</div><div class="title">用Python轻松实现视频转gif动图</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿浩</div><div class="author-info__description">要么出众，要么出局</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AHao688"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/AHao688" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">博客新域名： https://okahao.site</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">环境的安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">基础使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#xpath%E5%B8%B8%E7%94%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">xpath常用表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%96%E8%8A%82%E7%82%B9"><span class="toc-number">3.1.</span> <span class="toc-text">取节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%96%E6%96%87%E6%9C%AC"><span class="toc-number">3.2.</span> <span class="toc-text">取文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%96%E5%B1%9E%E6%80%A7"><span class="toc-number">3.3.</span> <span class="toc-text">取属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99xpath%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-number">4.</span> <span class="toc-text">写xpath表达式的小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%BC%9A%E5%81%B7%E6%87%92"><span class="toc-number">4.1.</span> <span class="toc-text">学会偷懒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xpath%E8%A7%A3%E6%9E%90%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">4.2.</span> <span class="toc-text">xpath解析的局限性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99xpath%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97"><span class="toc-number">4.3.</span> <span class="toc-text">写xpath表达式的避坑指南</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98"><span class="toc-number">5.</span> <span class="toc-text">爬虫实战</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/19/%E5%89%8D%E7%AB%AF/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E4%BD%BF%E7%94%A8vant%E7%BB%84%E4%BB%B6%E5%BA%93/" title="微信小程序中使用vant组件库"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序中使用vant组件库"/></a><div class="content"><a class="title" href="/2023/01/19/%E5%89%8D%E7%AB%AF/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E4%BD%BF%E7%94%A8vant%E7%BB%84%E4%BB%B6%E5%BA%93/" title="微信小程序中使用vant组件库">微信小程序中使用vant组件库</a><time datetime="2023-01-19T05:36:00.000Z" title="发表于 2023-01-19 13:36:00">2023-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/24/github/%E5%A6%82%E4%BD%95%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AEgithub/" title="如何加速访问Github"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover5.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="如何加速访问Github"/></a><div class="content"><a class="title" href="/2022/09/24/github/%E5%A6%82%E4%BD%95%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AEgithub/" title="如何加速访问Github">如何加速访问Github</a><time datetime="2022-09-24T06:50:00.000Z" title="发表于 2022-09-24 14:50:00">2022-09-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/" title="Python爬虫实战之xpath解析"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python爬虫实战之xpath解析"/></a><div class="content"><a class="title" href="/2022/08/01/Python/%E7%88%AC%E8%99%AB%E4%B9%8Bxpath%E8%A7%A3%E6%9E%90/" title="Python爬虫实战之xpath解析">Python爬虫实战之xpath解析</a><time datetime="2022-08-01T02:40:00.000Z" title="发表于 2022-08-01 10:40:00">2022-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/" title="用Python轻松实现视频转gif动图"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="用Python轻松实现视频转gif动图"/></a><div class="content"><a class="title" href="/2022/07/30/Python/%E8%A7%86%E9%A2%91%E8%BD%ACgif%E5%8A%A8%E5%9B%BE/" title="用Python轻松实现视频转gif动图">用Python轻松实现视频转gif动图</a><time datetime="2022-07-30T13:40:00.000Z" title="发表于 2022-07-30 21:40:00">2022-07-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/27/%E5%89%8D%E7%AB%AF/%E5%8E%9F%E7%94%9Fcss+js%E5%AE%9E%E7%8E%B0%E8%BD%AE%E6%92%AD%E5%9B%BE/" title="原生css+js实现轮播图"><img src="https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="原生css+js实现轮播图"/></a><div class="content"><a class="title" href="/2022/07/27/%E5%89%8D%E7%AB%AF/%E5%8E%9F%E7%94%9Fcss+js%E5%AE%9E%E7%8E%B0%E8%BD%AE%E6%92%AD%E5%9B%BE/" title="原生css+js实现轮播图">原生css+js实现轮播图</a><time datetime="2022-07-27T12:40:00.000Z" title="发表于 2022-07-27 20:40:00">2022-07-27</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://ahaoblog.oss-cn-guangzhou.aliyuncs.com/img/cover1.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 阿浩</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><div style="width:300px;margin:0 auto; padding:5px 0;"><a target="_blank" href="https://beian.miit.gov.cn/" style="display:inline-block;text-decoration:none;height:18px;line-height:18px;"><img src="/img/beian.png" class="custom_icon" /><p class="custom_p">粤ICP备2022142931号-1</p></a></div></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function insertCSS () {
+    const link = document.createElement("link")
+    link.rel = "stylesheet"
+    link.href = "https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css"
+    document.head.appendChild(link)
+  }
+
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline-server-six-kappa.vercel.app/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+  }
+
+  if (typeof Waline === 'function') initWaline()
+  else {
+    insertCSS()
+    getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="417794815" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="false" data-lrctype="3"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://lib.baomitu.com/pjax/0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

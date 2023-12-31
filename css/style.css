@@ -1,0 +1,11 @@
+.custom_p{
+    float:left;
+    height:18px;
+    line-height:18px;
+    margin: 0px 0px 0px 5px;
+}
+.custom_icon{
+    float: left;
+    width: 18px;
+    height: 18px;
+}
